@@ -1,0 +1,81 @@
+{% extends "helpdesk/base.html" %}{% load i18n %}
+
+{% block helpdesk_title %}{% trans "Add Queue Memeber" %}{% endblock %}
+
+{% block helpdesk_body %}
+<h2>{% trans 'Add Queue Memeber' %}</h2>
+
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            {% trans 'Add Memebers to Queues' %}
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div class="panel-body">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#QueueMember" data-toggle="tab">{% trans 'Queue Member' %}</a>
+                                </li>
+                                {% comment %} <li><a href="#UserCC" data-toggle="tab">{% trans 'User' %}</a>
+                                </li> {% endcomment %}
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="QueueMember">
+                                    <h4>{% trans 'Add Users' %}</h4>
+                                    
+
+                                     <form method='post' action='./'>
+                                        <fieldset>
+                                                {% if messages %}
+                                                {% for message in messages %}
+                                                    <div class="alert alert-warning alert-dismissable" role="alert">
+                                                        <button class="close" data-dismiss="alert">
+                                                            <small>X</small>
+                                                        </button>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endif %}
+                                            {% if all_items %}
+                                                {% for item in all_items %}
+                                                    {{item.queue}} |{{item.member}}
+                                                {% endfor %}
+                                            {% endif %}
+                                            {% if all_items %}
+                                             <dl>{% for item in all_items %}
+                                                <dt><label for='id_{{ item.queue }}'>{{ item.queue }}</label></dt>
+                                                <dd>{{ item.member }}</dd>
+                                                {% if item.errors %}<dd class='error'>{{ item.errors }}</dd>{% endif %}
+                                                {% if item.help_text %}<dd class='form_help_text'>{{ item.help_text }}</dd>{% endif %}
+                                            {% endfor %}</dl>
+                                            {% endif %}
+                                        </fieldset>
+                                        <button class="btn btn-primary" type='submit'>{% trans "Save Ticket CC" %}</button>
+                                    {% csrf_token %}</form>
+                                </div> 
+                                {% comment %} <div class="tab-pane fade" id="UserCC">
+                                    <h4>{% trans 'Add User' %}</h4>
+                                    <form method='post' action='./'>
+                                        <fieldset>
+                                            <dl>{% for field in form_user %}
+                                                <dt><label for='id_{{ field.name }}'>{{ field.label }}</label></dt>
+                                                <dd>{{ field }}</dd>
+                                                {% if field.errors %}<dd class='error'>{{ field.errors }}</dd>{% endif %}
+                                                {% if field.help_text %}<dd class='form_help_text'>{{ field.help_text }}</dd>{% endif %}
+                                            {% endfor %}</dl>
+                                        </fieldset>
+                                        <button class="btn btn-primary" type='submit'>{% trans "Save Ticket CC" %}</button>
+                                    {% csrf_token %}</form>
+                                </div> {% endcomment %}
+                            </div> 
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+            </div>
+            <!-- /.row -->
+
+{% endblock %}
